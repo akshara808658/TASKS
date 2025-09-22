@@ -11,10 +11,20 @@
 // function factorial(n){
 
 //   if(n === 0) return 1
-//   return fact =  n * factorial(n-1);
+//   return  n * factorial(n-1);
   
 // }
 // console.log(factorial(6));
+//using for loop
+// function fact(n){
+//   let result =1;
+//   for(let i=1; i<=1; i++){
+//     result *= i
+//   }
+//   return result
+// }
+// console.log(fact(3));
+
 // //in here first return 6 * factorial(5) then again move to function then return 5 * factorial(4).... last 1 * factorial(0) that is 1 so we get --> 6*5*4*3*2*1 = 720
 
 // //2-Sum of no.s from 1 to n
@@ -112,6 +122,5 @@ function isSorted(arr,i = arr.length-1){
 
 console.log(isSorted([1,2,3,3,4]));
 console.log(isSorted([2,4,1,4,5]));
-
 
 
