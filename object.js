@@ -61,110 +61,153 @@ function printTeacherName(){
   console.log(classObj.teacherName)
 }
 printTeacherName();
+
 //3-print all names of student
 console.log('----3---')
 function allStudents(){
-    for(let names of classObj.students){
-        console.log(names.name)
-    }
+  classObj.students.map(stu => console.log(stu.name));
 }
 allStudents()
-//4-print all ID 's
-console.log('----4---')
-function allId(){
-    for(let ids of classObj.students){
-        console.log(ids.id)
-    }
+//OR
+console.log('---OR---');
+function allStudents(){
+ classObj.students.forEach(stu => {
+    console.log(stu.name)
+ });
 }
-allId()
-//5-print sub name of specfic student
+allStudents();
+//4:-Write a function to print the IDs of all the students in the class.
+console.log('---4----');
+function allStudentId(){
+    classObj.students.forEach(ids => console.log(ids.id));
+}
+allStudentId();
+//5-Write a function to print the subject names for a specific student.
 console.log('----5---')
-function subName(studentName){
-    for(let student of classObj.students){
-        if(student.name === studentName){
-            for(let subject of student.marks){
-                console.log(subject.subject)
-            }
+function subName(student){
+    classObj.students.forEach(el => {
+        if(student === el.name){
+        for(const sub of el.marks ){
+            console.log(sub.subject)
         }
-    }
+        }
+    });
 }
-subName('Binu');
+subName('Binu')
 
-//6-marks of all sub
+//6-Write a function to print the marks of a specific student in all subjects.
 console.log('----6---')
-function allSubMark(studentName){
-    for(let student of classObj.students){
-        if(student.name === studentName){
-            console.log(`Marks of ${student.name}:`)
-            for(let subject of student.marks){
-                console.log(`${subject.subject} : ${subject.mark}`)
-            }
-        }
-    }
-     console.log('Student not found')
-}
-allSubMark('Ravi');
-//7-avg marks, // 8-Total mark
-console.log('---7,8-----')
-function avgMark(studentName){
-    for(let student of classObj.students){
-        if(student.name === studentName){
-            let total =0;
-            for(let sub of student.marks){
-                total += sub.mark;
-            }
-            console.log(`Total mark of ${student.name}: ${total}`)
-            const average = total / student.marks.length
-            console.log(`Average mark of ${student.name}: ${average}`);
-            return;
-        }
-    }
+function allSubMark(student){
+  const foundStudent = classObj.students.find(el => el.name === student)
+
+  if(foundStudent){
+    console.log(`Mark of ${foundStudent.name}: -`)
+    foundStudent.marks.forEach(sub => {
+        console.log(`${sub.subject}: ${sub.mark}`)
+    })
+  }else{
     console.log('Student not found')
+  }
+}
+allSubMark('Aju');
+
+//7,8-Write a function to calculate and print the average marks & total for a specific student.
+console.log('---7,8-----')
+function avgMark(student){
+    const foundStudent = classObj.students.find(el => el.name === student)
+
+    if(foundStudent){
+        let total = 0
+        foundStudent.marks.forEach(sub => {
+            total += sub.mark;
+        })
+        console.log(`Total Marks of ${foundStudent.name}:- ${total}`)
+    const avg = total / foundStudent.marks.length
+    console.log(`avg mark of  ${foundStudent.name}: ${avg}`)
+    }else{
+        console.log('Student not found')
+    }
 }
 avgMark('Binu');
 
-//9,10-total & avg of sub 
+//9-Write a function to calculate and print the average marks & total for all students in a specific subject.
 console.log('----9,10----')
-function avgSub(subName){
+function avgSubMark(sub){
     let total =0;
-    let count =0
-    for(let student of classObj.students){
-        for(let sub of student.marks){
-            if(sub.subject === subName){
-                total += sub.mark
-                count++;
-            }
+    let count =0;
+    let allMarks = classObj.students.flatMap(stu => stu.marks)
+
+    allMarks.forEach(el => {
+        if(el.subject === sub){
+            total += el.mark;
+            count++;
         }
-    }
-    console.log(`Total mark of ${subName}: ${total}`)
+    })
+    console.log(`Total mark of ${sub}: ${total}`)
     if(count > 0){
-        let average = total / count;
-        console.log(`Average mark for ${subName} : ${average}`);
+        let avg = total / count;
+        console.log(`Average mark of ${sub}: ${avg}`)
     }else{
-        console.log(`${subName} not found`)
+        console.log(`${sub} not found`)
     }
 }
-avgSub('Maths')
+avgSubMark('Chemistry')
 
-//11-highest mark in specific sub
+//11- Write a function to find and print the student with the highest marks in a specific subject.
 console.log('----11-----')
 function highestMark(sub){
-    let highest =0;
+    let highest = 0;
     let topStudent = [];
-    for(let student of classObj.students){
-        for(let subj of student.marks){
-           if(subj.subject === sub){
-              if(subj.mark > highest){
-                highest=subj.mark;
-                topStudent = [student.name]
-              }else if (subj.mark === highest){
-                 topStudent.push(student.name)
-              }
-           }
+    let allMarks = classObj.students.flatMap(stu => stu.marks.map(markObj => ({...markObj, studentName: stu.name})));
+
+    allMarks.forEach(el => {
+    if(el.subject === sub){
+        if(el.mark > highest){
+        highest = el.mark;
+        topStudent = [el.studentName]   
+        }else if(el.mark === highest){
+            topStudent.push(el.studentName)
         }
     }
-    console.log(`${topStudent.join(', ')} scored highest in ${sub}: ${highest}`)
+    })
+    console.log(`${topStudent.join(', ')} scored highest mark in ${sub}: ${highest}`)
 }
-
 highestMark('Maths');
-highestMark('Chemistry')
+//12-print lowest mark
+console.log('----12-----');
+function lowestMark(sub){
+    let lowest = Infinity;
+    let bottomStudent = [];
+    let allMarks = classObj.students.flatMap(stu => stu.marks.map(markObj => ({...markObj, studentName: stu.name})));
+
+    allMarks.forEach(el => {
+    if(el.subject === sub){
+        if(el.mark < lowest){
+        lowest = el.mark;
+        bottomStudent = [el.studentName]   
+        }else if(el.mark === lowest){
+            bottomStudent.push(el.studentName)
+        }
+    }
+    })
+    console.log(`${bottomStudent.join(', ')} scored lowest mark in ${sub}: ${lowest}`)
+}
+lowestMark('Maths');
+
+//13-Write a function to find and print the student with the highest total marks.
+function highestTotal(){
+let highestTotal = 0;
+let topStudent = [];
+
+for(let stu of classObj.students){
+    let total = stu.marks.reduce((sum,m) => sum+m.mark,0);
+    if(total > highestTotal){
+        highestTotal = total;
+        topStudent = [stu];
+    }else if(total === highestTotal){
+        topStudent.push(stu)
+    }
+}
+console.log(`${topStudent.map(s => s.name).join(', ')} is the topper and the score is ${highestTotal}`)
+}
+highestTotal();
