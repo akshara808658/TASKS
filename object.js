@@ -211,3 +211,106 @@ for(let stu of classObj.students){
 console.log(`${topStudent.map(s => s.name).join(', ')} is the topper and the score is ${highestTotal}`)
 }
 highestTotal();
+
+//14-Write a function to find and print the student with the lowest total marks.
+function lowestTotal(){
+let lowestTotal = Infinity;
+let lowestStudent = [];
+for(let stu of classObj.students){
+    let total = stu.marks.reduce((sum,m) => sum+m.mark,0);
+    if(total < lowestTotal){
+        lowestTotal = total;
+        lowestStudent = [stu];
+    }else if(total === lowestTotal){
+        lowestStudent.push(stu)
+    }
+}
+console.log(`${lowestStudent.map(s => s.name).join(', ')} is the lowest and the score is ${lowestTotal}`)
+}
+lowestTotal();
+
+//15- Write a function to find and print the subject with the highest average marks.
+function highestAvg(){
+let subjects = classObj.students[0].marks.map(m => m.subject);
+
+let average = subjects.map(sub => {
+    let total = classObj.students.reduce((sum, student) => {
+        let markObj = student.marks.find(m => m.subject === sub);
+        return sum + markObj.mark;
+    },0)
+    return {subject : sub, avg: total / classObj.students.length};
+});
+let top = average.reduce((max, curr) => curr.avg > max.avg ? curr : max);
+
+console.log(`${top.subject} is the highest mark scored subject and  average mark is: ${top.avg.toFixed(2)}`)
+}
+highestAvg();
+
+//16-Write a function to find and print the subject with the lowest average marks.
+function lowesetAvg(){
+    const subjects = classObj.students[0].marks.map(m => m.subject);
+
+    const averageMin = subjects.map(sub => {
+        const total = classObj.students.reduce((sum,stu) => {
+            const markObj = stu.marks.find(m => m.subject === sub);
+            return sum + markObj.mark;
+        },0);
+        return {subject: sub, avg: total/ classObj.students.length};
+    });
+    const lowest = averageMin.reduce((min, curr) => (curr.avg < min.avg ? curr : min));
+
+    console.log(`${lowest.subject} has the lowest average: ${lowest.avg.toFixed(2)}`)
+}
+lowesetAvg();
+
+//17-Write a function to calculate and print the overall average marks for the class.
+function overallClassAvg(){
+    let totalMarks = 0;
+    let totalCount = 0;
+    
+    for(let stu of classObj.students){
+        for(let m of stu.marks){
+            totalMarks += m.mark;
+            totalCount++;
+        }
+    }
+    let avg = totalMarks / totalCount;
+    console.log(`The overall average marks for the class is: ${avg.toFixed(2)}`)
+}
+overallClassAvg();
+
+//18-Write a function to calculate and print the overall total marks for the class.
+function overallMark(){
+    let totalMarks = 0;
+
+    for(let stu of classObj.students){
+        for(let m of stu.marks){
+            totalMarks += m.mark;
+        }
+    }
+    console.log(`overall total mark for the class is: ${totalMarks}`);
+}
+overallMark();
+
+//19-Write a function to calculate and print the average marks for each subject.
+function avgMarkSub(){
+    let subjectTotals = {};
+    let subjectCounts = {};
+
+    for(let stu of classObj.students){
+        for(let m of stu.marks){
+            if(!subjectTotals[m.subject]){
+                subjectTotals[m.subject] = 0;
+                subjectTotals[m.subject] =0;
+            }
+            subjectTotals[m.subject] += m.mark;
+            subjectCounts[m.subject] += 1;
+        }
+    }
+    for(let sub in subjectTotals){
+        let avg =subjectTotals[sub] / subjectCounts[sub];
+        console.log(`${sub} average: ${avg.toFixed(2)}`);
+    }
+}
+avgMarkSub();
+
