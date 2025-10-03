@@ -301,7 +301,7 @@ function avgMarkSub(){
         for(let m of stu.marks){
             if(!subjectTotals[m.subject]){
                 subjectTotals[m.subject] = 0;
-                subjectTotals[m.subject] =0;
+                subjectCounts[m.subject] =0;
             }
             subjectTotals[m.subject] += m.mark;
             subjectCounts[m.subject] += 1;
@@ -314,3 +314,20 @@ function avgMarkSub(){
 }
 avgMarkSub();
 
+//20-Write a function to calculate and print the total marks for each subject.
+function subjectTotals(){
+    let totals = {};
+
+    for (let stu of classObj.students){
+        for(let m of stu.marks){
+            if(!totals[m.subject]){
+               totals[m.subject] = 0;
+            } 
+            totals[m.subject] += m.mark;
+        }
+    }
+    for(let sub in totals){
+        console.log(`${sub} total: ${totals[sub]}`);
+    }
+}
+subjectTotals();
