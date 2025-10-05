@@ -331,3 +331,34 @@ function subjectTotals(){
     }
 }
 subjectTotals();
+
+//21-Write a function to find and print the subject with the highest total marks.
+function highestTotalSubject() {
+  let totals = {};
+  let highestTotal = -Infinity;
+  let highestSubjects = [];
+
+  for (let stu of classObj.students) {
+    for (let m of stu.marks) {
+      if (!totals[m.subject]) {
+        totals[m.subject] = 0;
+      }
+      totals[m.subject] += m.mark;
+    }
+  }
+
+
+  for (let sub in totals) {
+    if (totals[sub] > highestTotal) {
+      highestTotal = totals[sub];
+      highestSubjects = [sub];
+    } else if (totals[sub] === highestTotal) {
+      highestSubjects.push(sub);
+    }
+  }
+
+
+  console.log(`${highestSubjects.join(', ')} has the highest total marks: ${highestTotal}`);
+}
+
+highestTotalSubject();
