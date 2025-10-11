@@ -100,7 +100,7 @@
 // }
 // console.log(sumDigits(1445));
 
-//Sort an array usin for loop
+//Sort an array using for loop
 function isSorted(arr){
  for(let i=1; i< arr.length; i++){
   if(arr[i] < arr[i-1]){
