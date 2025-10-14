@@ -1025,4 +1025,182 @@ for(let  i= 0; i<n; i++){
     row += (j+1) + ' '
   }
   console.log(row)
-};
+};         
+
+//count numbers using %10
+function countNum(n){
+   let count = 0;
+   if(n === 0) return 1
+
+   n = Math.abs(n)
+
+   while(n > 0){
+      n = Math.floor(n/10)
+      count++
+   }
+   return count;
+}
+console.log(countNum(234))
+
+//count digits divisible by 3
+function countDivisibleByThree(n){
+   let count = 0;
+   n  = Math.abs(n);
+
+  while(n >0){
+   let digits = n % 10
+   if(digits % 3 === 0){
+      count++
+   }
+   n = Math.floor(n/10)
+  }
+  return count
+}
+console.log(countDivisibleByThree(123456))
+
+/*reverse a number
+Input: 12345
+Output: 54321
+*/
+function reverseNum(n){
+   let isNegative = n < 0
+   let rev = 0;
+   n = Math.abs(n)
+ while(n>0){
+   let digits = n % 10;
+   rev = rev*10+ digits
+   n = Math.floor(n/10)
+ }
+ return isNegative ? -rev : rev
+}
+console.log(reverseNum(2450));
+
+/**
+ * Sum of digits
+
+Input: 4321
+
+Output: 4+3+2+1 = 10
+*/
+function sumOfDigits(n){
+   let sum = 0;
+   n = Math.abs(n)
+
+   while(n>0){
+      let digits = n % 10;
+      sum += digits;
+      n = Math.floor(n/10)
+   }
+   return sum
+}
+console.log(sumOfDigits(4321))
+
+/**
+ *Factorial of a number
+
+Input: 5
+
+Output: 120
+*/
+function factorial(n){
+   let fact = 1;
+   for(let i = 1; i<=n; i++){
+      fact *= i
+   }
+   return fact;
+}
+console.log(factorial(5))
+
+/**
+ * Count even and odd digits
+
+Input: 1234567
+
+Output: Even: 3, Odd: 4
+ */
+function countEvevOdd(n){
+   let even = 0;
+   let odd = 0;
+
+   while(n>0){
+      let digits = n % 10;
+      if(digits % 2 === 0){
+         even++;
+      }
+      if(digits % 2 !== 0){
+         odd++;
+      }
+      n=Math.floor(n/10)
+   }
+   return {even, odd}
+}
+console.log(countEvevOdd(1234567))
+
+/**
+ Palindrome number check
+
+Input: 12321
+
+Output: true (palindrome)
+*/
+function isPalindrome(n){
+   let original = n
+   let rev = 0;
+   n = Math.abs(n);
+   let isNegative = n < 0;
+
+   while(n >0){
+      let digits = n % 10;
+      rev = rev *10 + digits;
+      n = Math.floor(n/10)
+   }
+   let reverse =  isNegative ? -rev :rev
+return reverse === original
+}
+console.log(isPalindrome(12321));
+
+/**
+ Find highest and lowest digit
+
+Input: 485723
+
+Output: Highest: 8, Lowest: 2
+*/
+function highestLowest(n){
+   let highest = -Infinity;
+   let lowest = Infinity;
+   n = Math.abs(n);
+
+   while(n >0){
+      let digit = n % 10
+      if(digit > highest){
+         highest = digit
+      }
+      if(digit < lowest){
+         lowest = digit
+      }
+      n = Math.floor(n/10)
+   }
+   return {highest,lowest}
+}
+console.log(highestLowest(485723))
+
+/**
+ Product of digits
+
+Input: 234
+
+Output: 2*3*4 = 24
+*/
+function product(n){
+   let product =1;
+   n = Math.abs(n);
+
+   while(n >0){
+      let digits = n % 10;
+      product *= digits;
+      n = Math.floor(n/10);
+   }
+   return product;
+}
+console.log(product(234));
